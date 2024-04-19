@@ -1,0 +1,2 @@
+FLASK_APP=LUTHERIA_FERMINO.py
+FLASK_ENV=development
