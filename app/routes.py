@@ -4,4 +4,4 @@ from flask import render_template
 @app.route("/")
 @app.route("/index")
 def home():
-    return render_template('login.html')
+    return render_template('index.html')

@@ -1,0 +1,18 @@
+body{
+    width: 90vh;
+    height: 90vh;
+    background-image:url(inicial.jpg);
+}
+
+.container{
+    padding: 10px;
+    position: relative;
+    background: antiquewhite;
+    background-color: beige;
+    border-radius: 1.75%;
+}
+
+.form-control {
+    width: 330px;
+}
+
