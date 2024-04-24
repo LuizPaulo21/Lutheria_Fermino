@@ -1,12 +1,24 @@
 from flask import Flask
-from flaskext.mysql import MySQL
+import mysql.connector
 
+dados = {
+    "user":"lutheriafermino",
+    "password":"teste",
+    'host': '127.0.0.1',
+    'database': 'lutheriafermino'
+}
 
-def iniciar_mysql(app):
-    mysql = MySQL()
-    app.config['MYSQL_DATABASE_USER'] = 'lutheriafermino'
-    app.config['MYSQL_DATABASE_PASSWORD'] = 'sua_senha'
-    app.config['MYSQL_DATABASE_DB'] = 'lutheriafermino'
-    app.config['MYSQL_DATABASE_HOST'] = 'localhost'  # Altere se o servidor MySQL estiver em outro local
-    mysql.init_app(app)
-    return mysql
+def mysq_con():
+    conexao = mysql.connector.connect(**dados)
+    return conexao
+
+def conectado(conexao):
+    if conexao.is_connected(){
+        return 'Conectado'
+    } else {
+        return 'Desconectado'
+    }
+
+def mysql_close(conexao):
+    conexao.close()
+    return 'Conexão Fechada'
