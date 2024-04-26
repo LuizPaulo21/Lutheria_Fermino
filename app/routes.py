@@ -38,7 +38,6 @@ def check_login():
 
         # Busca um registro e retorna o resultado
         usuario = cursor.fetchone()
-        print(usuario)
 
         # Verificando se existe o usuario no banco de dados
         if usuario:
@@ -57,6 +56,9 @@ def check_login():
 
     
 #Tela de cadastro de novos clientes
-@app.route("/cadastrar")
+@app.route("/cadastrar.html")
 def cadastrar():
-    return render_template("cadastrar.html")
+    if session['loggedin'] == True:
+        return render_template("cadastrar.html")
+    else:
+        return render_template("index.html", msg="Acesso negado, faça o login!")
