@@ -1,25 +1,25 @@
 {% extends 'base.html' %}
 
 {% block conteudo %}
-
+<!-- Para ser populado pelo retorno do banco de dados, alterado e executar UPDATE-->
 <div class="container card shadow-2-strong p-4 mt-4 bg-light" style="border-radius: 1rem">
-  <form action="/salvar" method="POST">
+  <form>
 
     <div class="row">
       <div class="form-group col-md-6">
         <label for="cpf">CPF</label>
-        <input type="text" class="form-control" id="cpf" name="cpf" maxlength="11" pattern="\d*" placeholder="apenas números, sem pontos e traço." required>
+        <input type="text" class="form-control" id="cpf" name="cpf" data-mask="000.000.000-00">
       </div>
       <div class="form-group col-md-6">
         <label for="inputEmail4">Nome</label>
-        <input type="text" class="form-control" id="nome" name="nome" required>
+        <input type="text" class="form-control" id="nome" name="nome" >
       </div>
     </div> <!-- Fim da linha 1 -->
 
     <div class="row">
       <div class="form-group col-md-6">
         <label for="inputAddress">Endereço</label>
-        <input type="text" class="form-control" id="endereco" name="endereco" required>
+        <input type="text" class="form-control" id="endereco" name="endereco">
       </div>
       <div class="form-group col-md-6">
         <label for="inputAddress2">Complemento</label>
@@ -30,15 +30,15 @@
     <div class="row">
       <div class="form-group col-md-3">
         <label for="inputAddress2">Bairro</label>
-        <input type="text" class="form-control" id="bairro" name="bairro" required>
+        <input type="text" class="form-control" id="bairro" name="bairro">
       </div>
       <div class="form-row col-md-3">
         <label for="inputCity">Cidade</label>
-        <input type="text" class="form-control" id="cidade" name="cidade" requiered>
+        <input type="text" class="form-control" id="cidade" name="cidade">
       </div>
       <div class="form-group col-md-3">
         <label for="inputState">Estado</label>
-        <select id="inputState" class="form-control" name="estado" required>
+        <select id="inputState" class="form-control">
           <option selected>Selecione...</option>
           <option value="Acre">Acre</option>
           <option value="Alagoas">Alagoas</option>
@@ -78,33 +78,35 @@
     <div class="row">
       <div class="form-group col-md-2">
         <label for="inputZip">Telefone</label>
-        <input type="text" class="form-control" id="telefone" name="telefone" data-mask="(00) 0000-0000" required>
+        <input type="text" class="form-control" id="telefone" name="telefone" data-mask="(00) 0000-0000" >
       </div>
       <div class="form-group col-md-2">
         <label for="inputZip">Celular</label>
-        <input type="text" class="form-control" id="celular" name="celular" data-mask="(00) 00000-0000" required>
+        <input type="text" class="form-control" id="celular" name="celular" data-mask="(00) 00000-0000" >
       </div>
       <div class="form-group col-md-2">
         <label for="inputZip">Contato</label>
-        <input type="text" class="form-control" id="contato" placeholder="recado" name="contato" required>
+        <input type="text" class="form-control" id="contato" placeholder="recado" name="contato">
       </div>
       <div class="form-group col-sm-6">
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" name="email" required>
+        <input type="email" class="form-control" id="email" name="email">
       </div>
     </div> <!-- Fim da linha 4 -->
     <br>
     <div class="row">
       <div class="form-floating">
-        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="observacao"></textarea>
-        <label for="floatingTextarea">Observações</label>
+        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" maxlength="350"></textarea>
+        <label for="floatingTextarea" name="obs">Observações</label>
       </div>
     </div>
     <br>
     <button type="submit" class="btn btn-primary btn-lg">Gravar</button>
-    <div>{{msg}}</div>
     <br>
   </form> <!-- Fim da linha 5 -->
 </div>
+<!-- Scripts de mascara de CPF/CNPJ e Número de telefone e Celular -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 
 {% endblock %}
