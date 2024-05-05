@@ -2,14 +2,13 @@
 
 {% block conteudo %}
 <div class="container card shadow-2-strong p-4 mt-4 bg-light">
-	<div class="card-title mb-2">Consultar Cliente</div>
+	<div class="card-title mb-2 h6 p-2">Consultar Cliente</div>
 	<form action="/procurar" method="POST">
 		<div class="row">
 			<div class="form-group col-md-3">
 				<select class="form-select" aria-label="Default select example" name="tipo">
 					<option selected>Selecione</option>
 					<option value="CPF">CPF</option>
-					<option value="CEP">CEP</option>
 					<option value="NOME">NOME</option>
 				  </select>
 			  </div>

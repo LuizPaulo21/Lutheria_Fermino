@@ -11,6 +11,8 @@ import os
 dotenv.load_dotenv()
 app.secret_key=os.getenv('SECRET_KEY')
 cnx = mysql_con()
+cursor = mysql_con().cursor()
+
 
 @app.route("/")
 @app.route("/index")
@@ -106,7 +108,7 @@ def salvar_cliente():
             # Retorna mensagem de sucesso no cadastro
             return render_template("cadastrar.html", msg="Cliente cadastrado com sucesso!")
 
-# Buscar um cadastro
+# Página para busca de cadastro de cliente
 @app.route("/buscar.html")
 def buscar():
     if session['loggedin'] == True:
@@ -114,50 +116,29 @@ def buscar():
     else:
         return render_template("index.html", msg="Acesso negado, faça o login!")
     
-# Busca um registro no banco de dados
+# Busca um registro de cliente no banco de dados
 @app.route("/procurar", methods=['POST'])
 def procurar():
 
     # Se usuario estiver logado
     if session['loggedin'] == True:
 
-        cursor = cnx.cursor()
-
         # Salva os dados do formulário
         tipo = request.form.get('tipo')
         dado = request.form.get('textobusca')
 
-        #Fazendo a busca de acordo com o dado
-        if tipo == 'CEP':
+        # Busca um registro
+        resultado = consulta_cliente(tipo, dado)
+        print(resultado[8])
+        #Se o registro existe
+        if resultado != None:
+            endereco = consulta_endereco(resultado[8])
 
-            cursor.execute('SELECT * FROM endereco WHERE CEP = %s', (dado,))
-            registro = cursor.fetchone()
-
-
-            # Se o endereço estiver cadastrado
-            if registro:
-                ultimoid = cursor.lastrowid
-                # Buscar o cadastro que possui o CEP
-                cursor.execute('SELECT * FROM cliente WHERE idendereco = %s', (ultimoid,))
-
-                #Retorna os dados populados na página
-                return render_template("consultarres.html")
-
-        if tipo == 'CPF':
-            cursor.execute('SELECT * FROM cliente WHERE CPF = %s', (dado,))
-            registro = cursor.fetchone()
-            cursor.execute('SELECT * FROM endereco WHERE idendereco = %s', (registro[8],))
-            endereco = cursor.fetchone()
-            return render_template("consultarres.html", dados = registro, endereco = endereco)
-        
-        if tipo == 'NOME':
-            cursor.execute('SELECT * FROM cliente WHERE nome = %s', (dado,))
-            return render_template("consultarres.html")
-
+            return render_template("consultarres.html", dados = resultado, endereco = endereco)
         else:
-            return render_template("buscar.html", msg="Cliente não consta na base de dados.")
+            return render_template("buscar.html", msg="Registro não existe na base de dados")
 
-
+ 
 # Página para inserir um pedido
 @app.route("/pedido.html")
 def incluir_pedido():
