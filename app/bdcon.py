@@ -52,3 +52,37 @@ def consulta_endereco(idendereco):
     resultado = cursor.fetchone()
 
     return resultado
+
+# Excluir Cliente
+def excluir_cliente(tipo, dado):
+    
+    # Cria um cursor
+    conexao = mysql_con()
+    cursor = conexao.cursor()
+
+    cursor.execute(f'SELECT * FROM cliente WHERE {tipo} = %s', (dado,))
+    resultado = cursor.fetchone()
+
+    if resultado:
+
+        idcliente = resultado[0]
+        idendereco = resultado[8]
+
+        # Deleta da tabela cliente
+        query = 'DELETE FROM cliente WHERE idcliente = %s'
+        cursor.execute(query, (idcliente,))
+
+        if cursor.rowcount > 0:
+
+            # Deleta da tabela endereco
+            query = 'DELETE FROM endereco WHERE idendereco = %s'
+            cursor.execute(query, (idendereco,))
+
+            conexao.commit()
+            return "Excluido com sucesso!"
+        
+        else:
+            return "Algo deu errado, por favor tente novamente!"
+        
+    else:
+        return "Nenhum resultado encontrado!"

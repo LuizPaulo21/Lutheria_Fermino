@@ -148,3 +148,28 @@ def incluir_pedido():
 @app.route("/consultarpedido.html")
 def consultar_pedido():
     return render_template("consultarpedido.html")
+
+# Página para excluir um cliente
+@app.route("/excluir.html")
+def excluir():
+    return render_template("excluir.html")
+
+
+# Função para excluir um cliente
+@app.route("/excluir", methods=['POST'])
+def excluir_registro_cliente():
+
+        # Se usuario estiver logado
+    if session['loggedin'] == True:
+
+        # Salva os dados do formulário
+        tipo = request.form.get('tipo')
+        dado = request.form.get('textobusca')
+
+        # Exclui o cliente
+        resultado = excluir_cliente(tipo, dado)
+
+        return render_template("excluir.html", msg=resultado)
+        
+    else:
+        return render_template("index.html", msg="Faça Login!")
