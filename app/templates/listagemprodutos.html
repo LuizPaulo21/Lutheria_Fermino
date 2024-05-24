@@ -14,10 +14,10 @@
   {% for produto in resultado %}
     <tr>
       <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-	  <td><button class="btn btn-primary">Abrir</button>
+      <td>{{produto[0]}}</td>
+      <td>{{produto[1]}}</td>
     </tr>
+  {%endfor%}
 <!-- Lógica Python para várias linhas aqui-->
   </tbody>
 </table>

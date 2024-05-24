@@ -177,13 +177,13 @@ def excluir_registro_cliente():
 
 # Página para buscar um produto
 @app.route("/buscarproduto.html")
-def buscar_produto():
+def busca_item():
 
     return render_template("buscarproduto.html")
 
 # Função para buscar produtos
 @app.route("/buscar_produtos", methods=['POST'])
-def buscar_produtos(tipo, dado):
+def procura_produtos():
     
     #Salva os dados do formulário
     tipo = request.form.get('tipo')
@@ -192,4 +192,8 @@ def buscar_produtos(tipo, dado):
     #Busca os dados no banco
     resultado = buscar_produtos(tipo, dado)
 
-    return render_template("listagemprodutos.html",resultado)
+    if resultado:
+        return render_template("listagemprodutos.html", resultado=resultado)
+    else:
+        return render_template("buscarproduto.html", msg="Nada encontrado! Por favor tente novamente.")
+    
