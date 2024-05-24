@@ -86,3 +86,21 @@ def excluir_cliente(tipo, dado):
         
     else:
         return "Nenhum resultado encontrado!"
+    
+# Busca uma lista de produtos
+def buscar_produtos(tipo, dado):
+    
+    # Cria um cursor
+    conexao = mysql_con()
+    cursor = conexao.cursor()
+
+    #Query para buscar no banco
+    query = f'SELECT * FROM produtos WHERE {tipo} = %s'
+    cursor.execute(query, (dado,))
+    #Salva todos os registros retornados
+    resultado = cursor.fetchall()
+
+    if cursor.rowcount > 0:
+        return resultado
+    else:
+        "Nenhum registro encontrado!"

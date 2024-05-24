@@ -129,7 +129,7 @@ def procurar():
 
         # Busca um registro
         resultado = consulta_cliente(tipo, dado)
-        print(resultado[8])
+
         #Se o registro existe
         if resultado != None:
             endereco = consulta_endereco(resultado[8])
@@ -173,3 +173,23 @@ def excluir_registro_cliente():
         
     else:
         return render_template("index.html", msg="Faça Login!")
+    
+
+# Página para buscar um produto
+@app.route("/buscarproduto.html")
+def buscar_produto():
+
+    return render_template("buscarproduto.html")
+
+# Função para buscar produtos
+@app.route("/buscar_produtos", methods=['POST'])
+def buscar_produtos(tipo, dado):
+    
+    #Salva os dados do formulário
+    tipo = request.form.get('tipo')
+    dado = request.form.get('textobusca')
+
+    #Busca os dados no banco
+    resultado = buscar_produtos(tipo, dado)
+
+    return render_template("listagemprodutos.html",resultado)

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+<div class="container mt-4 ml-4 mr-4 p-2" style="border-style: solid;border-width: 1px; border-radius: 5px;">
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Código</th>
+      <th scope="col">Produto</th>
+    </tr>
+  </thead>
+  <tbody>
+  <!-- Lógica Python para várias linhas aqui-->
+  {% for produto in resultado %}
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+	  <td><button class="btn btn-primary">Abrir</button>
+    </tr>
+<!-- Lógica Python para várias linhas aqui-->
+  </tbody>
+</table>
+</div>
+
+{% endblock %}
