@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<div class="container card shadow-2-strong p-4 mt-4 bg-light" style="border-radius: 1rem">
+  <div class="h6 p-2">Cadastrar Produto</div>
+  <form action="/salvarproduto" method="POST">
+
+    <div class="row">
+      <div class="form-row col-md-3">
+        <label for="inputCity">Produto</label>
+        <input type="text" class="form-control" id="cidade" name="produto" requiered>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="inputState">Marca</label>
+        <select id="inputState" class="form-control" name="marca" required>
+          {% for marca in listamarcas %}
+          <option value="{{marca[1]}}">{{marca[1]}}</option>
+          {%endfor%}
+        </select>
+      </div>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary btn-lg">Gravar</button>
+    <div>{{msg}}</div>
+    <br>
+  </form>
+
+{% endblock %}

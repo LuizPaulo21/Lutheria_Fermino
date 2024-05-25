@@ -188,6 +188,7 @@ def procura_produtos():
     #Salva os dados do formulário
     tipo = request.form.get('tipo')
     dado = request.form.get('textobusca')
+    print(tipo)
 
     #Busca os dados no banco
     resultado = buscar_produtos(tipo, dado)
@@ -197,3 +198,25 @@ def procura_produtos():
     else:
         return render_template("buscarproduto.html", msg="Nada encontrado! Por favor tente novamente.")
     
+# Página para incluir um produto
+@app.route("/incluirproduto.html")
+def incluirproduto():
+
+    listamarcas = listar_marcas()
+
+    return render_template("incluirproduto.html", listamarcas=listamarcas)
+
+# Função para Salvar Produto
+@app.route("/salvarproduto", methods=['POST'])
+def salvar_produto():
+
+    nome = request.form.get('produto')
+    marca = request.form.get('marca')
+
+    resultado = salvarproduto(nome, marca)
+
+    if resultado:
+        retorno = listar_marcas()
+        return render_template("incluirproduto.html", msg="Produto salvo com sucesso!", listamarcas = retorno)
+    else:
+        return render_template("incluirproduto.html", msg="Algo deu errado, por favor tente novamente!")

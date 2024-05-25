@@ -104,8 +104,8 @@ def buscar_produtos(tipo, dado):
 
         if id_marca:
             # Busca produtos que possuem o idmarca encontrado
-            query2 = 'SELECT * FROM produtos WHERE idmarca = %s'
-            resultado = cursor.execute(query2, id_marca[0])
+            query2 = 'SELECT * FROM produtos WHERE idmarca LIKE %s'
+            resultado = cursor.execute(query2, (f"%{id_marca[0]}%",))
             resultado = cursor.fetchall()
 
             return resultado
@@ -117,7 +117,39 @@ def buscar_produtos(tipo, dado):
         # Busca pelo nome do produto
         query = 'SELECT * FROM produtos WHERE produto LIKE %s'
         resultado = cursor.execute(query, (f"%{dado}%",))
-
         resultado = cursor.fetchall()
 
         return resultado
+    
+# Função para listar todas as marcas cadastradas
+def listar_marcas():
+    
+    # Cria um cursor
+    conexao = mysql_con()
+    cursor = conexao.cursor()
+
+    query = 'SELECT * FROM marca'
+    resultado = cursor.execute(query)
+    resultado = cursor.fetchall()
+
+    return resultado
+
+# Função para salvar um novo produto
+def salvarproduto(nome, marca):
+
+    # Cria um cursor
+    conexao = mysql_con()
+    cursor = conexao.cursor()
+
+    #Query para buscar id da marca
+    query = "SELECT * FROM marca WHERE Marca = %s"
+    cursor.execute(query, (marca,))
+    idmarca = cursor.fetchone()
+
+    # Query para inserção
+    query2 = "INSERT INTO produtos (produto, idmarca) VALUES (%s, %s)"
+    cursor.execute(query2, (nome, idmarca[0],))
+    resultado = cursor.rowcount
+    conexao.commit() # Confirmando a transação
+
+    return resultado
