@@ -1,4 +1,3 @@
-from flask import Flask
 import mysql.connector
 import dotenv
 import os

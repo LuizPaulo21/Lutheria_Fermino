@@ -3,14 +3,14 @@
 {% block conteudo %}
 <!-- Tela de inserção de pedidos-->
 <div class="container card shadow-2-strong bg-light mt-4">
-    <form action="/incluir_pedido">
+    <form action="/salvar_pedido">
 
         <div class="h6 p-2">Cadastrar Pedido</div>
 
         <div class="row p-2"> <!-- linha 1 -->
                 <div class="col">
-                    <label for="cliente">Cliente</label>
-                    <input type="text" class="form-control" name="cliente">
+                    <label for="cliente">Código Cliente</label>
+                    <input type="number" class="form-control" name="cliente">
                 </div>
 
                 <div class="col">
@@ -29,14 +29,24 @@
         </div> <!--  fim linha 1 -->
             
         <div class="row p-2"> <!--Linha 2-->
-                <div class="col-sm-3">
-                    <label for="peca">Fabricante</label>
-                    <input type="text" class="form-control" name="fabricante">
-                </div>
-                <div class="col-sm-9">
-                    <label for="peca">Peça</label>
-                    <input type="text" class="form-control" name="peca">
-                </div>
+            <div class="col-sm-3">    
+                <label for="tipo">Fabricante</label>
+                <select name="tipo" class="form-control" required>
+                    <option selected>Selecione...</option>
+                    {% for marca in marca%}
+                    <option value="Troca" name="marca">{{marca[1]}}</option>
+                    {% endfor %}
+                </select>
+                <label for="tipo">Peça</label>
+                <select name="tipo" class="form-control" required>
+                    <option selected>Selecione...</option>
+                    {% {{fabricante}} = request.form.get("marca") %}
+                    {% lista_de_peças = buscar_produto(fabricante) %}
+                    {%for produto in lista_de_pecas%}
+                    <option value="Troca" name="troca">produto[1]</option>
+                    {% endfor %}
+                    {% endblock %}
+                </select>
         </div> <!-- Fim Linha 2 -->
 
         <div class="row p-2"> <!--Linha 3-->

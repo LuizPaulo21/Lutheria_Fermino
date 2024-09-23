@@ -4,7 +4,7 @@
 
 <div class="container card shadow-2-strong p-4 mt-4 bg-light" style="border-radius: 1rem">
   <div class="h6 p-2">Cadastrar Cliente</div>
-  <form action="/salvar" method="POST">
+  <form action="/salvar" method="POST" id="formcad">
 
     <div class="row">
       <div class="form-group col-md-6">
@@ -40,7 +40,6 @@
       <div class="form-group col-md-3">
         <label for="inputState">Estado</label>
         <select id="inputState" class="form-control" name="estado" required>
-          <option selected>Selecione...</option>
           <option value="Acre">Acre</option>
           <option value="Alagoas">Alagoas</option>
           <option value="Amapá">Amapá</option>
@@ -107,5 +106,6 @@
     <br>
   </form> <!-- Fim da linha 5 -->
 </div>
+<script src="/app/static/validacoes.js"></script>
 
 {% endblock %}

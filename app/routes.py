@@ -7,7 +7,6 @@ import dotenv
 import os
 
 
-
 dotenv.load_dotenv()
 app.secret_key=os.getenv('SECRET_KEY')
 cnx = mysql_con()
@@ -142,7 +141,28 @@ def procurar():
 # Página para inserir um pedido
 @app.route("/pedido.html")
 def incluir_pedido():
-    return render_template("pedido.html")
+    
+    marca = listar_marcas()
+
+    return render_template("pedido.html", marcas = marca)
+
+# Função para gravar um pedido
+@app.route("/salvar_pedido")
+def salvar_pedido():
+
+    dados_pedido = {
+        # Buscar dados do formulário
+        "cliente" : request.form.get("cliente"),
+        "tipo" : request.form.get("Troca"),
+        "prazo" : request.form.get("datetime"),
+        "fabricante" : request.form.get("fabricante"),
+        "peca" : request.form.get("peca"),
+        "quantidade" : request.form.get("quantidade"),
+        "valor" : request.form.get("valor"),
+        "obs" : request.form.get("observacoes") }
+
+    print(dados_pedido)
+
 
 # Página para consultar um pedido
 @app.route("/consultarpedido.html")
@@ -188,8 +208,7 @@ def procura_produtos():
     #Salva os dados do formulário
     tipo = request.form.get('tipo')
     dado = request.form.get('textobusca')
-    print(tipo)
-
+    
     #Busca os dados no banco
     resultado = buscar_produtos(tipo, dado)
 
