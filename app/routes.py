@@ -169,6 +169,11 @@ def salvar_pedido():
 def consultar_pedido():
     return render_template("consultarpedido.html")
 
+# Página para cadastrar um pedido
+@app.route("/cadastrarpedido.html")
+def cadastrar_pedido():
+    return render_template("cadastrarpedido.html")
+
 # Página para excluir um cliente
 @app.route("/excluir.html")
 def excluir():

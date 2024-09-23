@@ -5,7 +5,7 @@
 <div class="container card shadow-2-strong bg-light mt-4">
     <form action="/incluir_pedido">
 
-        <div class="h6 p-2">Consultar Pedido</div>
+        <div class="h6 p-2">Cadastrar Pedido</div>
 
         <div class="row p-2">
             <div class="col col-sm-3">
@@ -17,12 +17,12 @@
         <div class="row p-2"> <!-- linha 1 -->
                 <div class="col">
                     <label for="cliente">Cliente</label>
-                    <input type="text" class="form-control" name="cliente" readonly>
+                    <input type="text" class="form-control" name="cliente">
                 </div>
 
                 <div class="col">
                     <label for="tipo">Tipo</label>
-                    <select name="tipo" class="form-control" required readonly>
+                    <select name="tipo" class="form-control" required>
                         <option selected>Selecione...</option>
                         <option value="Troca" name="troca">Troca</option>
                         <option value="Troca" name="conserto">Conserto</option>
@@ -31,38 +31,38 @@
 
                 <div class="col">
                     <label for="prazo">Prazo</label>
-                    <input type="datetime" class="form-control" name="prazo" readonly>
+                    <input type="date" class="form-control" name="prazo" >
                 </div> 
         </div> <!--  fim linha 1 -->
             
         <div class="row p-2"> <!--Linha 2-->
                 <div class="col-sm-3">
                     <label for="peca">Fabricante</label>
-                    <input type="text" class="form-control" name="fabricante" readonly>
+                    <input type="text" class="form-control" name="fabricante">
                 </div>
                 <div class="col-sm-9">
                     <label for="peca">Peça</label>
-                    <input type="text" class="form-control" name="peca" readonly>
+                    <input type="text" class="form-control" name="peca">
                 </div>
         </div> <!-- Fim Linha 2 -->
 
         <div class="row p-2"> <!--Linha 3-->
                 <div class="col">
                     <label for="peca">Quantidade</label>
-                    <input type="text" class="form-control" name="quantidade" readonly>
+                    <input type="text" class="form-control" name="quantidade">
                 </div>
                 <div class="col">
                     <label for="peca">Valor Unitário</label>
-                    <input type="text" class="form-control" name="valor" readonly>
+                    <input type="text" class="form-control" name="valor">
                 </div>
                 <div class="col">
                     <label for="total">Valor Total</label>
-                    <input type="text" class="form-control" name="total" readonly>
+                    <input type="text" class="form-control" name="total">
                 </div>
         </div> <!-- Fim Linha 3-->
 
         <div class="form-floating p-2"> <!--Linha 4-->
-            <textarea class="form-control" style="height: 100px" id="observacoes" name="observacoes" readonly></textarea>
+            <textarea class="form-control" style="height: 100px" id="observacoes" name="observacoes"></textarea>
             <label for="observacoes">Observações</label>
         </div>
             <button type="submit" class="btn btn-primary btn-lg p-2 float-end m-4">Gravar</button>
