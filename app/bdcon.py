@@ -90,12 +90,13 @@ def excluir_cliente(tipo, dado):
 # Busca uma lista de produtos
 def buscar_produtos(tipo, dado):
     
+    print(tipo)
     # Cria um cursor
     conexao = mysql_con()
     cursor = conexao.cursor()
 
     #Define como a busca será feita
-    if tipo == 'Marca':
+    if tipo == 'marca':
         #Busca id da marca
         query = 'SELECT idmarca FROM marca WHERE Marca = %s'
         cursor.execute(query, (dado,))

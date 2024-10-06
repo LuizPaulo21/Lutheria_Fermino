@@ -17,13 +17,12 @@
         <div class="row p-2"> <!-- linha 1 -->
                 <div class="col">
                     <label for="cliente">Cliente</label>
-                    <input type="text" class="form-control" name="cliente">
+                    <input type="text" class="form-control" name="cliente" value ="{{nome}}" readonly>
                 </div>
 
                 <div class="col">
                     <label for="tipo">Tipo</label>
                     <select name="tipo" class="form-control" required>
-                        <option selected>Selecione...</option>
                         <option value="Troca" name="troca">Troca</option>
                         <option value="Troca" name="conserto">Conserto</option>
                     </select>
