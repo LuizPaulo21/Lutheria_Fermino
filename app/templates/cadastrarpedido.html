@@ -2,33 +2,34 @@
 
 {% block conteudo %}
 <!-- Tela de inserção de pedidos-->
-<div class="container card shadow-2-strong bg-light mt-4">
+<div class="{% if ALTO_CONTRASTE %}bg-dark text-white container card shadow-5-strong p-4 mt-4 fw-bold {% endif %} container card shadow-2-strong bg-light mt-4">
     <form action="/incluir_pedido">
 
-        <div class="h6 p-2">Cadastrar Pedido</div>
+        <div class="h4 p-2">Cadastrar Pedido</div>
 
         <div class="row p-2">
             <div class="col col-sm-3">
                 <label for="numero_pedido">Número do Pedido</label>
-                <input type="text" class="form-control" name="numero_pedido" readonly>
+                <input type="text" class="form-control" name="numero_pedido" value="{{ultimoid}}" readonly>
             </div>
         </div>
 
         <div class="row p-2"> <!-- linha 1 -->
-                <div class="col">
+                <div class="col-5">
                     <label for="cliente">Cliente</label>
                     <input type="text" class="form-control" name="cliente" value ="{{nome}}" readonly>
                 </div>
-
-                <div class="col">
+                <div class="col-1">
+                    <button class="btn btn-primary btn-md p-2 mt-4">Buscar</button>
+                </div>
+                <div class="col-3">
                     <label for="tipo">Tipo</label>
                     <select name="tipo" class="form-control" required>
                         <option value="Troca" name="troca">Troca</option>
                         <option value="Troca" name="conserto">Conserto</option>
                     </select>
                 </div>
-
-                <div class="col">
+                <div class="col-3">
                     <label for="prazo">Prazo</label>
                     <input type="date" class="form-control" name="prazo" >
                 </div> 

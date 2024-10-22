@@ -6,6 +6,9 @@ import hashlib
 import dotenv
 import os
 
+#app.config.from_pyfile('config.py')
+app.config['ALTO_CONTRASTE'] = False
+
 
 dotenv.load_dotenv()
 app.secret_key=os.getenv('SECRET_KEY')
@@ -16,7 +19,7 @@ cursor = mysql_con().cursor()
 @app.route("/")
 @app.route("/index")
 def home():
-    return render_template('index.html')
+    return render_template('index.html', ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
 
 # Criação de login e sessão
 @app.route("/login", methods=['POST'])
@@ -47,19 +50,19 @@ def check_login():
             session['username']=usuario[1]
 
             # Redireciona ao inicio do sistema
-            return render_template("base.html")
+            return render_template("base.html", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
         else:
             msg = "Usuario ou senha incorretos!"
 
-    return render_template('index.html', msg=msg)
+    return render_template('index.html', msg=msg, ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
     
 #Tela de cadastro de novos clientes
 @app.route("/cadastrar.html")
 def cadastrar():
     if session['loggedin'] == True:
-        return render_template("cadastrar.html")
+        return render_template("cadastrar.html", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
     else:
-        return render_template("index.html", msg="Acesso negado, faça o login!")
+        return render_template("index.html", msg="Acesso negado, faça o login!", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
 
 # Salva novo cliente no banco de dados    
 @app.route("/salvar", methods=['POST'])
@@ -90,7 +93,7 @@ def salvar_cliente():
 
         # Se o registro existe
         if registro:
-            return render_template('cadastrar.html', msg="Cliente já cadastrado") 
+            return render_template('cadastrar.html', msg="Cliente já cadastrado", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE']) 
         else:
             #Insere primeiramente um enderço
             cursor.execute('INSERT INTO endereco (cep, logradouro, bairro, cidade, estado, complemento) VALUES (%s, %s, %s, %s, %s, %s)', (cep, endereco, bairro, cidade, estado, complemento))
@@ -105,15 +108,15 @@ def salvar_cliente():
             cnx.commit()
 
             # Retorna mensagem de sucesso no cadastro
-            return render_template("cadastrar.html", msg="Cliente cadastrado com sucesso!")
+            return render_template("cadastrar.html", msg="Cliente cadastrado com sucesso!", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
 
 # Página para busca de cadastro de cliente
 @app.route("/buscar.html")
 def buscar():
     if session['loggedin'] == True:
-        return render_template("buscar.html")
+        return render_template("buscar.html", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
     else:
-        return render_template("index.html", msg="Acesso negado, faça o login!")
+        return render_template("index.html", msg="Acesso negado, faça o login!", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
     
 # Busca um registro de cliente no banco de dados
 @app.route("/procurar", methods=['POST'])
@@ -133,9 +136,9 @@ def procurar():
         if resultado != None:
             endereco = consulta_endereco(resultado[8])
 
-            return render_template("consultarres.html", dados = resultado, endereco = endereco)
+            return render_template("consultarres.html", dados = resultado, endereco = endereco, ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
         else:
-            return render_template("buscar.html", msg="Registro não existe na base de dados")
+            return render_template("buscar.html", msg="Registro não existe na base de dados", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
 
  
 # Página para inserir um pedido
@@ -144,7 +147,7 @@ def incluir_pedido():
     
     marca = listar_marcas()
 
-    return render_template("pedido.html", marcas = marca)
+    return render_template("pedido.html", marcas = marca, ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
 
 # Função para gravar um pedido
 @app.route("/salvar_pedido")
@@ -167,17 +170,19 @@ def salvar_pedido():
 # Página para consultar um pedido
 @app.route("/consultarpedido.html")
 def consultar_pedido():
-    return render_template("consultarpedido.html")
+    return render_template("consultarpedido.html", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
 
 # Página para cadastrar um pedido
 @app.route("/cadastrarpedido.html")
 def cadastrar_pedido():
-    return render_template("cadastrarpedido.html")
+
+    ultimoid = consultarultimoid()
+    return render_template("cadastrarpedido.html", ultimoid = ultimoid, ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
 
 # Página para excluir um cliente
 @app.route("/excluir.html")
 def excluir():
-    return render_template("excluir.html")
+    return render_template("excluir.html", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
 
 
 # Função para excluir um cliente
@@ -194,17 +199,17 @@ def excluir_registro_cliente():
         # Exclui o cliente
         resultado = excluir_cliente(tipo, dado)
 
-        return render_template("excluir.html", msg=resultado)
+        return render_template("excluir.html", msg=resultado, ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
         
     else:
-        return render_template("index.html", msg="Faça Login!")
+        return render_template("index.html", msg="Faça Login!", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
     
 
 # Página para buscar um produto
 @app.route("/buscarproduto.html")
 def busca_item():
 
-    return render_template("buscarproduto.html")
+    return render_template("buscarproduto.html", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
 
 # Função para buscar produtos
 @app.route("/buscar_produtos", methods=['POST'])
@@ -218,9 +223,9 @@ def procura_produtos():
     resultado = buscar_produtos(tipo, dado)
 
     if resultado:
-        return render_template("listagemprodutos.html", resultado=resultado)
+        return render_template("listagemprodutos.html", resultado=resultado, ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
     else:
-        return render_template("buscarproduto.html", msg="Nada encontrado! Por favor tente novamente.")
+        return render_template("buscarproduto.html", msg="Nada encontrado! Por favor tente novamente.", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
     
 # Página para incluir um produto
 @app.route("/incluirproduto.html")
@@ -228,7 +233,7 @@ def incluirproduto():
 
     listamarcas = listar_marcas()
 
-    return render_template("incluirproduto.html", listamarcas=listamarcas)
+    return render_template("incluirproduto.html", listamarcas=listamarcas, ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
 
 # Função para Salvar Produto
 @app.route("/salvarproduto", methods=['POST'])
@@ -241,6 +246,13 @@ def salvar_produto():
 
     if resultado:
         retorno = listar_marcas()
-        return render_template("incluirproduto.html", msg="Produto salvo com sucesso!", listamarcas = retorno)
+        return render_template("incluirproduto.html", msg="Produto salvo com sucesso!", listamarcas = retorno, ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
     else:
-        return render_template("incluirproduto.html", msg="Algo deu errado, por favor tente novamente!")
+        return render_template("incluirproduto.html", msg="Algo deu errado, por favor tente novamente!", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
+    
+
+#Ativa/Desativa o alto contraste
+@app.route("/altocontraste") 
+def altocontraste():
+    app.config['ALTO_CONTRASTE'] = not app.config['ALTO_CONTRASTE']
+    return render_template("base.html", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])

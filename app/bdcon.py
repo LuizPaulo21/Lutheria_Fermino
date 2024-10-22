@@ -90,7 +90,6 @@ def excluir_cliente(tipo, dado):
 # Busca uma lista de produtos
 def buscar_produtos(tipo, dado):
     
-    print(tipo)
     # Cria um cursor
     conexao = mysql_con()
     cursor = conexao.cursor()
@@ -107,7 +106,6 @@ def buscar_produtos(tipo, dado):
             query2 = 'SELECT * FROM produtos WHERE idmarca LIKE %s'
             resultado = cursor.execute(query2, (f"%{id_marca[0]}%",))
             resultado = cursor.fetchall()
-
             return resultado
         
         else:
@@ -153,3 +151,20 @@ def salvarproduto(nome, marca):
     conexao.commit() # Confirmando a transação
 
     return resultado
+
+#Consulta o ultimo id do pedido
+def consultarultimoid():
+
+    # Cria um cursor
+    conexao = mysql_con()
+    cursor = conexao.cursor()
+
+    #query
+    query = "SELECT LAST_INSERT_ID()"
+    resultado = cursor.execute(query)
+    
+    if resultado == None:
+        return 1
+    else:
+    
+        return resultado

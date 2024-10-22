@@ -2,7 +2,7 @@
 
 {% block conteudo %}
 <!-- Para ser populado pelo retorno do banco de dados, alterado e executar UPDATE-->
-<div class="container card shadow-2-strong p-4 mt-4 bg-light" style="border-radius: 1rem">
+<div class="{%if ALTO_CONTRASTE% }bg-secondary text-white container card shadow-2-strong p-4 mt-4{% endif %} container card shadow-2-strong p-4 mt-4 bg-light" style="border-radius: 1rem">
   <div class="h5 p-2">Alterar</div>
   <form>
 

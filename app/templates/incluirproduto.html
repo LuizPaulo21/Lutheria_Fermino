@@ -2,8 +2,8 @@
 
 {% block conteudo %}
 
-<div class="container card shadow-2-strong p-4 mt-4 bg-light" style="border-radius: 1rem">
-  <div class="h6 p-2">Cadastrar Produto</div>
+<div class="{% if ALTO_CONTRASTE %}bg-dark text-white container card shadow-5-strong p-4 mt-4 fw-bold {% endif %} container card shadow-2-strong p-4 mt-4 bg-light" style="border-radius: 1rem">
+  <div class="h4 p-2">Cadastrar Produto</div>
   <form action="/salvarproduto" method="POST">
 
     <div class="row">

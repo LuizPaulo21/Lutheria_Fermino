@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block conteudo %}
-<div class="container card shadow-2-strong p-4 mt-4 bg-light">
-	<div class="card-title mb-2 h6 p-2">Buscar Produto</div>
+<div class="{% if ALTO_CONTRASTE %}bg-dark text-white container card shadow-5-strong p-4 mt-4 fw-bold {% endif %} container card shadow-2-strong p-4 mt-4 bg-light">
+	<div class="card-title mb-2 h4 p-2">Buscar Produto</div>
 	<form action="/buscar_produtos" method="POST">
 		<div class="row">
-			<div class="form-group col-md-3">
+			<div class="fw-bold form-group col-md-3">
 				<select class="form-select" aria-label="Default select example" name="tipo">
 					<option selected>Selecione</option>
 					<option value="marca">Marca</option>

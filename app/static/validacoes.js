@@ -100,3 +100,4 @@ function validarCPF(cpf) {
     // Verifica se os dígitos verificadores calculados correspondem aos fornecidos
     return digito1 === parseInt(cpf.charAt(9)) && digito2 === parseInt(cpf.charAt(10));
 }
+
