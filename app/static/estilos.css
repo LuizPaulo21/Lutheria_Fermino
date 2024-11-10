@@ -7,6 +7,6 @@
     color: white;
 }
 
-.dropdown-item:hover {
-    background-color: #ff0000; /* Light gray */
-  }
+.font {
+    font-size: 20px;
+}

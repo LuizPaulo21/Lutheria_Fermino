@@ -2,7 +2,7 @@
 
 {% block conteudo %}
 <!-- Tela de inserção de pedidos-->
-<div class="container card shadow-2-strong bg-light mt-4">
+<div class="container card shadow-2-strong bg-light mt-4 {% if FONTE %} font {% endif %}">
     <form action="/salvar_pedido">
 
         <div class="h6 p-2">Cadastrar Pedido</div>

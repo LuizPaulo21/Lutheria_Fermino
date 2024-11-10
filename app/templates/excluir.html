@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block conteudo %}
-<div class="{% if ALTO_CONTRASTE %}bg-dark text-white container card shadow-5-strong p-4 mt-4 fw-bold {% endif %} container card shadow-2-strong p-4 mt-4 bg-light">
+<div class="{% if ALTO_CONTRASTE %}bg-dark text-white container card shadow-5-strong p-4 mt-4 fw-bold {% endif %} {% if FONTE %} font {% endif %} container card shadow-2-strong p-4 mt-4 bg-light">
 	<div class="card-title mb-2 h4 p-2">Excluir Cliente</div>
 	<form action="/excluir" method="POST">
 		<div class="row">

@@ -8,6 +8,7 @@ import os
 
 #app.config.from_pyfile('config.py')
 app.config['ALTO_CONTRASTE'] = False
+app.config['FONTE'] = "20px"
 
 
 dotenv.load_dotenv()
@@ -256,3 +257,9 @@ def salvar_produto():
 def altocontraste():
     app.config['ALTO_CONTRASTE'] = not app.config['ALTO_CONTRASTE']
     return render_template("base.html", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
+
+#Aumenta o tamanho da fonte
+@app.route("/aumentarfonte") 
+def aumentafonte():
+
+    return render_template("base.html", FONTE = app.config['FONTE'])
