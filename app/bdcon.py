@@ -168,3 +168,69 @@ def consultarultimoid():
     else:
     
         return resultado
+    
+# Função para salvar uma nova marca
+def salvarmarca(marca):
+
+    dado = marca
+    # Cria um cursor
+    conexao = mysql_con()
+    cursor = conexao.cursor()
+
+    # Query para inserção da nova marca
+    query = "INSERT INTO marca (Marca) VALUES (%s)"
+    cursor.execute(query, (marca,))
+    conexao.commit() # Confirmando a transação
+
+    return dado
+
+# Salva pedido no banco de dados
+def salvar_pedido(dados_pedido):
+    
+    # Cria um cursor
+    conexao = mysql_con()
+    cursor = conexao.cursor()
+
+    
+
+    #Checa se o cliente existe consultando o CPF
+    query = f'SELECT * FROM cliente WHERE {dados_pedido["CPF"]} = %s '
+    cliente_existe = cursor.execute(query, (dados_pedido["CPF"],))
+    cliente = cursor.fetchone()
+    id_cliente = cliente[0]
+
+    #Busca o ID da Peça dentro do do dicionario
+    id_peca_str = dados_pedido["Peça"]
+    id_peca_eval = eval(id_peca_str)
+    id_peca = id_peca_eval[0]
+
+    #Calculo de valor total
+    valor1 = float(dados_pedido["Valor_Unitario"])
+    valor2 = float(dados_pedido["Quantidade"])
+    valor_total = valor1 * valor2
+
+    query2 = "SELECT * FROM produtos WHERE idproduto = %s"
+    peca_existe = cursor.execute(query, id_peca)
+    peça = cursor.fetchone()
+    id_peca = peça[0]
+
+    if cliente_existe and peca_existe:
+        #Query para salvar o pedido
+        query = "INSERT INTO pedido (prazo, quantidade, valor, valortotal, idcliente, idpeca) VALUES (%s, %s, %s, %s, %s, %s)"
+        resultado = cursor.execute(query, (dados_pedido["Prazo"],dados_pedido["Quantidade"], dados_pedido["Valor_Unitario"], valor_total, id_cliente, id_peca ))
+        return True
+    else:
+        return False
+
+#Função para listar todas as peças
+def listar_pecas():
+    # Cria um cursor
+    conexao = mysql_con()
+    cursor = conexao.cursor()
+
+    # Query para inserção da nova marca
+    query = "SELECT * FROM produtos"
+    cursor.execute(query)
+    resultado = cursor.fetchall()
+
+    return resultado

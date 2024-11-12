@@ -6,7 +6,6 @@ import hashlib
 import dotenv
 import os
 
-#app.config.from_pyfile('config.py')
 app.config['ALTO_CONTRASTE'] = False
 app.config['FONTE'] = "20px"
 
@@ -143,42 +142,34 @@ def procurar():
 
  
 # Página para inserir um pedido
-@app.route("/pedido.html")
+@app.route("/cadastrarpedido.html")
 def incluir_pedido():
     
-    marca = listar_marcas()
+    peças = listar_pecas()
+    ultimoid = consultarultimoid()
 
-    return render_template("pedido.html", marcas = marca, ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
+    return render_template("cadastrarpedido.html", peca = peças, ultimoid = ultimoid, ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
 
-# Função para gravar um pedido
-@app.route("/salvar_pedido")
-def salvar_pedido():
+# Função para Salvar Pedido
+@app.route("/salvar_pedidos", methods=['POST'])
+def salvar_pedidos():
 
     dados_pedido = {
-        # Buscar dados do formulário
-        "cliente" : request.form.get("cliente"),
-        "tipo" : request.form.get("Troca"),
-        "prazo" : request.form.get("datetime"),
-        "fabricante" : request.form.get("fabricante"),
-        "peca" : request.form.get("peca"),
-        "quantidade" : request.form.get("quantidade"),
-        "valor" : request.form.get("valor"),
-        "obs" : request.form.get("observacoes") }
+    'CPF': request.form.get('CPF'),
+    'Tipo': request.form.get('tipo'),
+    'Prazo': request.form.get('prazo'),
+    'Peça': request.form.get('peca'),
+    'Quantidade': request.form.get('quantidade'),
+    'Valor_Unitario': request.form.get('valor'),
+    'Observações': request.form.get('observacoes')
+    } 
 
-    print(dados_pedido)
+    resultado = salvar_pedido(dados_pedido)  
 
-
-# Página para consultar um pedido
-@app.route("/consultarpedido.html")
-def consultar_pedido():
-    return render_template("consultarpedido.html", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
-
-# Página para cadastrar um pedido
-@app.route("/cadastrarpedido.html")
-def cadastrar_pedido():
-
-    ultimoid = consultarultimoid()
-    return render_template("cadastrarpedido.html", ultimoid = ultimoid, ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
+    if resultado:
+        return render_template("cadastrarpedido.html", msg="Produto salvo com sucesso!", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
+    else:
+        return render_template("cadastrarpedido.html", msg="Algo deu errado, por favor tente novamente!", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
 
 # Página para excluir um cliente
 @app.route("/excluir.html")
@@ -250,6 +241,25 @@ def salvar_produto():
         return render_template("incluirproduto.html", msg="Produto salvo com sucesso!", listamarcas = retorno, ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
     else:
         return render_template("incluirproduto.html", msg="Algo deu errado, por favor tente novamente!", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
+    
+# Página para incluir uma marca
+@app.route("/cadastrarmarca.html")
+def cadastrarmarca():
+
+    return render_template("cadastrarmarca.html", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
+
+# Função para salvar uma marca
+@app.route("/salvarmarca", methods=['POST'])
+def salvar_marca():
+
+    marca = request.form.get('marca')
+
+    resultado = salvarmarca(marca)
+
+    if resultado:
+        return render_template("cadastrarmarca.html", msg="Marca salva com sucesso!", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
+    else:
+        return render_template("cadastrarmarca.html", msg="Algo deu errado, tente novamente!", ALTO_CONTRASTE = app.config['ALTO_CONTRASTE'])
     
 
 #Ativa/Desativa o alto contraste

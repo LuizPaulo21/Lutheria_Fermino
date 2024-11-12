@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<div class="{% if ALTO_CONTRASTE %}bg-dark text-white container card shadow-5-strong p-4 mt-4 fw-bold {% endif %} {% if FONTE %} font {% endif %} container card shadow-2-strong p-4 mt-4 bg-light" style="border-radius: 1rem">
+  <div class="h4 p-2">Cadastrar Marca</div>
+  <form action="/salvarmarca" method="POST">
+
+    <div class="row">
+      <div class="form-row col-md-3">
+        <label for="inputCity">Marca</label>
+        <input type="text" class="form-control" id="cidade" name="marca" requiered>
+      </div>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary btn-lg">Gravar</button>
+    <div>{{msg}}</div>
+    <br>
+  </form>
+
+{% endblock %}
